@@ -1,0 +1,229 @@
+import objetos.*
+import personas.*
+import bolichito.*
+
+test "el rojo es un color fuerte"{
+    assert.that(rojo.fuerte())
+}
+
+test "el verde es un color fuerte" {
+    assert.that(verde.fuerte())
+}
+
+test "el celeste no es un color fuerte"{
+    assert.notThat(celeste.fuerte())
+}
+
+test "el pardo no es un color fuerte" {
+    assert.notThat(pardo.fuerte())
+}
+
+test "el cobre brilla" {
+    assert.that(cobre.brilla())
+}
+
+test "el vidrio brilla" {
+    assert.that(vidrio.brilla())
+}
+
+test "el lino no brila" {
+    assert.notThat(lino.brilla())
+}
+
+test "la madera no brilla" {
+    assert.notThat(madera.brilla())
+}
+
+test "el cuero no brilla" {
+    assert.notThat(cuero.brilla())
+}
+
+test "el peso original del muñeco es igual a 100"{
+    assert.equals(100, muñeco.peso())
+}
+
+test "el peso del muñeco puede variar" {
+    muñeco.pesoNuevo(300)
+    assert.equals(300, muñeco.peso())
+}
+
+test "a Estefania le gusta la remera ya que es roja, osease, de un color fuerte" {
+    assert.that(estefania.leGusta(remera))
+}
+
+test "a estefania no le gusta el muñeco, ya que es celeste, osease, no tiene un color fuerte" {
+    assert.notThat(estefania.leGusta(muñeco))
+}
+
+test "a luisa le gusta el muñeco, ya que dicho muñeco es vidrio" {
+    assert.that(luisa.leGusta(muñeco))
+}
+
+test "a luisa no le gusta la biblioteca, ya que dicho objeto es de madera" {
+    assert.notThat(luisa.leGusta(biblioteca))
+}
+
+test "a juan le gusta la pelota de color Pardo" {
+    assert.that(juan.leGusta(pelota))
+}
+
+test "a juan no le gusta la placa de color verde por su peso" {
+    assert.notThat(juan.leGusta(placa))
+}
+
+test "el peso de la placa de cobre color verde puede cambiar" {
+    placa.pesoNuevo(10)
+    assert.equals(10, placa.peso())
+}
+
+test "el peso de la placa de cobre de color verde puede cambiar más de una vez" {
+    placa.pesoNuevo(10)
+    placa.pesoNuevo(4)
+    assert.equals(4, placa.peso())
+}
+
+test "el color de la placa de cobre puede cambiar según los colores existentes" {
+    placa.pintarDe(naranja)
+    assert.equals(naranja, placa.color())
+}
+
+test "el color de la placa de cobre puede cambiar, haciendo que su color pase a no ser fuerte" {
+    placa.pintarDe(celeste)
+    assert.notThat(placa.color().fuerte())
+}
+
+test "el color del banquito puede cambiar a uno nuevo, el cual deja de ser fuerte" {
+    banquito.pintarDe(pardo)
+    assert.notThat(banquito.color().fuerte())
+}
+
+test "el peso total inicial de la cajita es de 580, siendo 400 el peso de la caja en sí y 180
+extras del arito que se encuentra dentro de la misma" {
+    assert.equals(580, cajita.peso())
+}
+
+test "el peso total de la caja disminuye si se saca el objeto que está dentro de sí " {
+    cajita.sacarObjetoDeCaja()
+    assert.equals(400, cajita.peso())
+}
+
+test "el peso total de la caja va variando según el objeto que reemplace al actual, en este caso
+se reemplazará el arito por la remera, dando 1200 como peso total" {
+    cajita.reemplazarObjetoEnCajaPor(remera)
+    assert.equals(1200, cajita.peso())
+}
+
+test "el peso total de la caja se va reemplazando y actualizando correctamente, 
+en este caso, se reemplazara el arito por el muñeco, para luego reemplazarlo por la remera, 
+dando 1200 como peso total" {
+    cajita.reemplazarObjetoEnCajaPor(muñeco)
+    cajita.reemplazarObjetoEnCajaPor(remera)
+    assert.equals(1200, cajita.peso())
+}
+
+test "el objeto en vidriera se puede actualizar a uno nuevo, pasando de no haber nada,
+a haber una remera en la vidriera" {
+    bolichito.actualizarObjetoEnVidrieraPor(remera)
+    assert.equals(remera, bolichito.objetoEnVidriera())
+}
+
+test "el objeto en el mostrador se puede actualizar a uno nuevo, pasando de no haber nada,
+a haber un arito en el mostrador" {
+    bolichito.actualizarObjetoEnMostradorPor(arito)
+    assert.equals(arito, bolichito.objetoEnMostrador())
+}
+
+test "el bolichito puede determinar si es brilante a partir de el brillo que tengan los objetos 
+exhibidos en el mostrador y en la vidriera, en este caso hay una placa y una cajita de cobre,
+osease, es cierto." {
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    bolichito.actualizarObjetoEnMostradorPor(cajita)
+    assert.that(bolichito.esBrillante())
+}
+
+test "el bolichito puede determinar si es monocromático al fijarse el color de ambos objetos, 
+del mostrador y de la vidriera, en este caso esta la placa de cobre y el banquito, los 
+cuales se pintan del mismo color, celeste" {
+    placa.pintarDe(celeste)
+    banquito.pintarDe(celeste)
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    bolichito.actualizarObjetoEnMostradorPor(banquito)
+    assert.that(bolichito.esMonocromatico())
+}
+
+test "el bolichito puede determinar si está equilibrado fijandose si es que el peso del objeto en 
+el mostrador es mayor que el de la vidriera,en este caso, la placa y la cajita, 
+los cuales difieren en peso, la placa pesando 100 de por si dentro de la vidriera y, y la caja cambiando el arito 
+que tiene dentro por el muñeco que pesa 100 gramos, dando 500 como peso total en el mostrador." {
+    placa.pesoNuevo(100)
+    cajita.reemplazarObjetoEnCajaPor(muñeco)
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    bolichito.actualizarObjetoEnMostradorPor(cajita)
+    assert.that(bolichito.estaEquilibrado())
+}
+
+test "ya que el bolichito puede determinar si se encuentra o no equilibrado según el peso de los 2 
+objetos exhibidos, se tomará el caso de que ambos objetos, en este caso placa y muñeco, pesen lo 
+mismo, pesando ambos 500, siendo falso en este caso." {
+    placa.pesoNuevo(500)
+    muñeco.pesoNuevo(500)
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    bolichito.actualizarObjetoEnMostradorPor(muñeco)
+    assert.notThat(bolichito.estaEquilibrado())
+}
+
+test "ya que el bolichito puede determinar si está equilibrado, he hecho una función extra que 
+indica verdad cuando se cumple lo contrario, osease, cuando está desequilibrado, en este caso
+teniendo los objetos de arito y biblioteca, el cual el arito pesa 180 y se encuentra en el mostrador 
+y la biblioteca 8000 encontrandose en la vidriera" {
+    bolichito.actualizarObjetoEnVidrieraPor(biblioteca)
+    bolichito.actualizarObjetoEnMostradorPor(arito)
+    assert.notThat(bolichito.estaEquilibrado())
+    assert.that(bolichito.estaDesequilibrado())
+}
+
+test "el bolichito puede determinar si alguno de sus objetos tiene un color determinado, en este 
+caso estamos buscando que algún objeto tenga de color rojo, siendo que el banquito pasa a ser de 
+color naranja a ser rojo, mientras que la placa sigue siendo verde." {
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    banquito.pintarDe(rojo)
+    bolichito.actualizarObjetoEnMostradorPor(banquito)
+    assert.that(bolichito.tieneObjetoExhibidoDeColor(rojo))
+}
+
+test "el bolichito puede mejorar la exhibición de sus productos, siendo el caso en el que 
+dichos objetos estén desequilibrados o sean monocromáticos, en este caso, los objetos a analizar 
+son la placa y el banquito, los cuales tienen pesos distintos y son monocromáticos." {
+    placa.pintarDe(celeste)
+    banquito.pintarDe(celeste)
+    bolichito.actualizarObjetoEnVidrieraPor(placa)
+    bolichito.actualizarObjetoEnMostradorPor(banquito)
+    assert.that(bolichito.puedeMejorar())
+}
+
+test "el bolichito puede determinar si puede ofrecer cierto producto a un cliente determinado, 
+en este caso, los objetos exhibidos son la remera de lino roja de 800 gramos y la pelota de 
+cuero parda de 1300 gramos, la persona a ofrecerle dichos productos es Estefania, a la cual 
+le va a gustar la remera" {
+    bolichito.actualizarObjetoEnVidrieraPor(remera)
+    bolichito.actualizarObjetoEnMostradorPor(pelota)
+    assert.that(bolichito.puedeOfrecerObjetoA(estefania))
+}
+
+test "el bolichito puede determinar si puede ofrecer cierto producto a un cliente determinado, 
+en este caso, los objetos exhibidos son la remera de lino roja de 800 gramos y la pelota de 
+cuero parda de 1300 gramos, la persona a ofrecerle dichos productos es Juan, al cual le va a 
+gustar la pelota" {
+    bolichito.actualizarObjetoEnVidrieraPor(remera)
+    bolichito.actualizarObjetoEnMostradorPor(pelota)
+    assert.that(bolichito.puedeOfrecerObjetoA(juan))
+}
+
+test "el bolichito puede determinar si puede ofrecer cierto producto a un cliente determinado, 
+en este caso, los objetos exhibidos son la remera de lino roja de 800 gramos y la pelota de 
+cuero parda de 1300 gramos, la persona a ofrecerle dichos productos es Luisa, a la cual no 
+le va a gustar ninguna de las opciones dadas." {
+    bolichito.actualizarObjetoEnVidrieraPor(remera)
+    bolichito.actualizarObjetoEnMostradorPor(pelota)
+    assert.notThat(bolichito.puedeOfrecerObjetoA(luisa))
+}
